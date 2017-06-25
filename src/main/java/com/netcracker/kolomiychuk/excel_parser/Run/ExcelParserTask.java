@@ -7,8 +7,9 @@ import javax.xml.bind.JAXBException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.concurrent.Callable;
 
-public  class ExcelParserTask implements Runnable {
+public  class ExcelParserTask implements Callable {
     private final String filePath;
     private final EntityRepository entityRepository;
 
@@ -18,8 +19,7 @@ public  class ExcelParserTask implements Runnable {
     }
 
     @Override
-    public void run() {
-
+    public Object call() throws Exception{
         ExcelEntityParser excelEntityParser = null;
         try {
             excelEntityParser = new ExcelEntityParser();
@@ -34,5 +34,8 @@ public  class ExcelParserTask implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
+
+
 }

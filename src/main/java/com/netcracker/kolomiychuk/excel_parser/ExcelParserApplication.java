@@ -7,6 +7,10 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,10 +22,18 @@ public class ExcelParserApplication {
                 new FileSystemXmlApplicationContext("src/main/webapp/WEB-INF/applicationContext.xml");
         EntityRepository entityRepository = ctx.getBean(EntityRepository.class);
         ExecutorService executorService = Executors.newFixedThreadPool(args.length);
+        Collection<Callable<ExcelParserTask>> tasks = new ArrayList<Callable<ExcelParserTask>>();
         for (String filePath : args) {
-            executorService.execute(new ExcelParserTask(filePath, entityRepository));
+            tasks.add(new ExcelParserTask(filePath, entityRepository));
         }
+        try {
+            executorService.invokeAll(tasks);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        executorService.shutdown();
     }
+
 
 
 
