@@ -38,16 +38,23 @@ public class ExcelEntityParser {
     }
 
     public Collection<? extends Object> readFromExcel(FileInputStream file) throws IOException {
-        Collection<Object> collection = new ArrayList<Object>();
-        HSSFWorkbook myExcelBook = new HSSFWorkbook(file);
-        for (int n =0; n<myExcelBook.getNumberOfSheets(); n++) {
-            readSheet(myExcelBook.getSheetAt(n),collection);
+        Collection<Object> entities = new ArrayList<Object>();
+        HSSFWorkbook myExcelBook = null;
+        try {
+            myExcelBook = new HSSFWorkbook(file);
+            for (int n = 0; n < myExcelBook.getNumberOfSheets(); n++) {
+                readSheet(myExcelBook.getSheetAt(n), entities);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        myExcelBook.close();
-        return collection;
+        finally {
+            myExcelBook.close();
+        }
+        return entities;
     }
 
-    private void readSheet(HSSFSheet myExcelSheet, Collection<Object> collection)
+    private void readSheet(HSSFSheet myExcelSheet, Collection<Object> entities)
     {
         HSSFRow firstRow = myExcelSheet.getRow(myExcelSheet.getFirstRowNum());
         if (firstRow == null ){
@@ -60,7 +67,9 @@ public class ExcelEntityParser {
         for(int rowNumber = myExcelSheet.getFirstRowNum()+1; rowNumber<=myExcelSheet.getLastRowNum(); rowNumber++) {
             HSSFRow row = myExcelSheet.getRow(rowNumber);
             Object object = parseEntity(row.getCell(attributesCellNumber).getStringCellValue());
-            collection.add(object);
+            if (object!=null) {
+                entities.add(object);
+            }
         }
     }
 

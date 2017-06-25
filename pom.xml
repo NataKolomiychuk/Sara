@@ -14,13 +14,14 @@
     </prerequisites>
 
     <properties>
-        <vaadin.version>8.0.6</vaadin.version>
-        <vaadin.plugin.version>8.0.6</vaadin.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <spring.version>4.1.6.RELEASE</spring.version>
         <tomcat.jdbc.version>7.0.35</tomcat.jdbc.version>
+        <poi.version>3.12</poi.version>
+        <spring.oxm.version>4.2.4.RELEASE</spring.oxm.version>
+        <ojdbc6.version>11.2.0.3</ojdbc6.version>
     </properties>
 
 
@@ -71,23 +72,23 @@
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3</version>
+            <version>${ojdbc6.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>3.12</version>
+            <version>${poi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>3.12</version>
+            <version>${poi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-oxm</artifactId>
-            <version>4.2.4.RELEASE</version>
+            <version>${spring.oxm.version}</version>
         </dependency>
 
 

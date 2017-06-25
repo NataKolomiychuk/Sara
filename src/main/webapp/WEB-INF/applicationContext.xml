@@ -11,9 +11,6 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="com.netcracker.kolomiychuk.excel_parser" />
-    <task:annotation-driven/>
-
-
 
 
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
@@ -27,8 +24,8 @@
         <constructor-arg ref="dataSource" />
     </bean>
 
-    <bean id = "insert"
-          class = "com.netcracker.kolomiychuk.excel_parser.manager.Insert">
+    <bean id = "entityRepository"
+          class = "com.netcracker.kolomiychuk.excel_parser.manager.EntityRepository">
         <constructor-arg ref="dataSource"/>
     </bean>
 

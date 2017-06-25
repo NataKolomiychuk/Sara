@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 @Component
-public class Insert {
+public class EntityRepository {
     public static final String CREATE_BOOK = ""+
             "INSERT INTO BOOKS" +
             "( name, pages_count) " +
@@ -31,31 +31,31 @@ public class Insert {
 
     public static final String CREATE_BOOKSHELFS = ""+
             "INSERT INTO BOOKSHELFS" +
-            "( book_shelf_id, length) " +
-            "VALUES(?, ?)";
+            "(  length) " +
+            "VALUES(?)";
 
     public JdbcTemplate jdbcTemplate;
 
-    public Insert(DataSource dataSource) {
+    public EntityRepository(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void insertAll(Collection<? extends Object> collection) {
-        for (Object obj:collection) {
-            if (obj.getClass().equals(Book.class)) {
-                createBook((Book)obj);
+    public void insertAll(Collection<? extends Object> entities) {
+        for (Object entity:entities) {
+            if (entity.getClass().equals(Book.class)) {
+                insertBook((Book)entity);
             };
-            if (obj.getClass().equals(Author.class)) {
-                createAuthors((Author)obj);
+            if (entity.getClass().equals(Author.class)) {
+                insertAuthor((Author)entity);
 
             };
-            if (obj.getClass().equals(BookShelf.class)) {
-                createBookShelfs((BookShelf)obj);
+            if (entity.getClass().equals(BookShelf.class)) {
+                insertBookShelf((BookShelf)entity);
             };
         }
     }
     @Transactional
-    public Book createBook(Book book) {
+    public Book insertBook(Book book) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -63,7 +63,7 @@ public class Insert {
                         connection.prepareStatement(CREATE_BOOK, new String[] {"book_id"});
                 int i = 0;
                 ps.setString(++i, book.getName());
-                ps.setString(++i, String .valueOf(book.getPagesCount()));
+                ps.setInt(++i, book.getPagesCount());
                 return ps;
             }
         }, keyHolder);
@@ -72,7 +72,7 @@ public class Insert {
     }
 
     @Transactional
-    public Author createAuthors(Author author) {
+    public Author insertAuthor(Author author) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -81,27 +81,27 @@ public class Insert {
                 int i = 0;
                 ps.setString(++i, author.getFirstName());
                 ps.setString(++i, author.getLastName());
-                ps.setString(++i, String .valueOf(author.getAge()));
+                ps.setInt(++i, author.getAge());
                 return ps;
             }
         }, keyHolder);
-        author.setAuthor_id(keyHolder.getKey().intValue());
+        author.setAuthorId(keyHolder.getKey().intValue());
         return author;
     }
 
     @Transactional
-    public BookShelf createBookShelfs(BookShelf bookShelf) {
+    public BookShelf insertBookShelf(BookShelf bookShelf) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps =
                         connection.prepareStatement(CREATE_BOOKSHELFS, new String[] {"book_shelf_id"});
                 int i = 0;
-                ps.setString(++i, String.valueOf(bookShelf.getShelfNumber()));
-                ps.setString(++i, String .valueOf(bookShelf.getLength()));
+                ps.setInt(++i, bookShelf.getLength());
                 return ps;
             }
         }, keyHolder);
+        bookShelf.setShelfNumber(keyHolder.getKey().intValue());
         return bookShelf;
     }
 }

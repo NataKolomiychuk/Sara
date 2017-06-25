@@ -8,14 +8,14 @@ public class Author {
     private String firstName;
     private String lastName;
     private Integer age;
-    private Integer author_id;
+    private Integer authorId;
 
-    public Integer getAuthor_id() {
-        return author_id;
+    public Integer getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor_id(Integer author_id) {
-        this.author_id = author_id;
+    public void setAuthorId(Integer author_id) {
+        this.authorId = author_id;
     }
 
 
