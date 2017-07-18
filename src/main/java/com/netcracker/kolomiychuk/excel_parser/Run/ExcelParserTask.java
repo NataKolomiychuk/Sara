@@ -1,5 +1,6 @@
 package com.netcracker.kolomiychuk.excel_parser.Run;
 
+import com.netcracker.kolomiychuk.excel_parser.entities.Entity;
 import com.netcracker.kolomiychuk.excel_parser.excel.ExcelEntityParser;
 import com.netcracker.kolomiychuk.excel_parser.manager.EntityRepository;
 
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 
-public  class ExcelParserTask implements Callable {
+public class ExcelParserTask implements Callable {
     private final String filePath;
     private final EntityRepository entityRepository;
 
@@ -19,17 +20,16 @@ public  class ExcelParserTask implements Callable {
     }
 
     @Override
-    public Object call() throws Exception{
+    public Object call() throws Exception {
         ExcelEntityParser excelEntityParser = null;
         try {
             excelEntityParser = new ExcelEntityParser();
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-        Collection<? extends Object> entitiesByType = null;
         try {
             FileInputStream file = new FileInputStream(filePath);
-            entitiesByType = excelEntityParser.readFromExcel(file);
+            Collection<Entity> entitiesByType = excelEntityParser.readFromExcel(file);
             entityRepository.insertAll(entitiesByType);
         } catch (IOException e) {
             e.printStackTrace();

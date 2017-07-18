@@ -5,18 +5,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collection;
 
 @XmlRootElement
-public class Book {
+public class Book implements Entity {
     private String name;
     private int pagesCount;
-    private int bookId;
-
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
 
     public String getName() {
         return name;

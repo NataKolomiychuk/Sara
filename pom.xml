@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.netcracker.project.study</groupId>
+    <groupId>com.netcracker.kolomiychuk</groupId>
     <artifactId>excelparser</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>yanber-taxi</name>
+    <name>excelparser</name>
 
     <prerequisites>
         <maven>3</maven>
@@ -35,7 +35,6 @@
 
 
     <dependencies>
-
         <!--SPRING SETTINGS-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -52,7 +51,6 @@
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
         <!--DATABASE SETTINGS-->
         <dependency>
             <groupId>org.springframework</groupId>

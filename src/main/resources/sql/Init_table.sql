@@ -35,6 +35,7 @@ end;
 CREATE TABLE BookShelfs
 (
   book_shelf_id     NUMBER(20)  PRIMARY KEY,
+  shelf_number NUMBER(20),
   length    NUMBER(20,2) 
 ) ;
 
@@ -76,9 +77,6 @@ select book_shelf_id.nextval into :new.book_shelf_id from dual;
 end if;
 end;
 /
-
-
-
 
 COMMIT;
 

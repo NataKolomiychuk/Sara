@@ -22,7 +22,7 @@ public class ExcelParserApplication {
                 new FileSystemXmlApplicationContext("src/main/webapp/WEB-INF/applicationContext.xml");
         EntityRepository entityRepository = ctx.getBean(EntityRepository.class);
         ExecutorService executorService = Executors.newFixedThreadPool(args.length);
-        Collection<Callable<ExcelParserTask>> tasks = new ArrayList<Callable<ExcelParserTask>>();
+        Collection<Callable<ExcelParserTask>> tasks = new ArrayList<>();
         for (String filePath : args) {
             tasks.add(new ExcelParserTask(filePath, entityRepository));
         }
@@ -31,7 +31,9 @@ public class ExcelParserApplication {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        executorService.shutdown();
+        finally {
+            executorService.shutdown();
+        }
     }
 
 

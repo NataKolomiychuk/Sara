@@ -4,21 +4,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Author {
+public class Author implements Entity{
     private String firstName;
     private String lastName;
     private Integer age;
-    private Integer authorId;
-
-    public Integer getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Integer author_id) {
-        this.authorId = author_id;
-    }
-
-
 
     public String getFirstName() {
         return firstName;

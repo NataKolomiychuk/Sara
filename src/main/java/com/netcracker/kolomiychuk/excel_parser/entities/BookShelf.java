@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class BookShelf {
+public class BookShelf implements Entity {
 
     private int shelfNumber;
     private int length;
